@@ -31,8 +31,8 @@ Once you have created the workflows in the Paradym dashboard, you can copy the w
 | Variable                                | Description                                                                                                                                                                                                                   |
 | --------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `PARADYM_API_KEY`                       | This is the API key used to send request to Paradym. You can generate your API key in the settings tab on the Paradym dashboard as described in [here](https://docs.paradym.id/executing-a-workflow/api-execution#api-key).   |
-| `ISSUE_COURSE_CREDENTIAL_WORKFLOW_ID`   | This is the ID of the issue course credential workflow. Once you have created the workflow in Paradym you can copy the ID from the [executions tab](https://docs.paradym.id/executing-a-workflow/api-execution#workflow-id).  |
-| `VERIFY_COURSE_CREDENTIALS_WORKFLOW_ID` | This is the ID of the verify course credential workflow. Once you have created the workflow in Paradym you can copy the ID from the [executions tab](https://docs.paradym.id/executing-a-workflow/api-execution#workflow-id). |
+| `ISSUE_COURSE_CERTIFICATE_WORKFLOW_ID`  | This is the ID of the issue course credential workflow. Once you have created the workflow in Paradym you can copy the ID from the [executions tab](https://docs.paradym.id/executing-a-workflow/api-execution#workflow-id).  |
+| `VERIFY_COURSE_CERTIFICATE_WORKFLOW_ID` | This is the ID of the verify course credential workflow. Once you have created the workflow in Paradym you can copy the ID from the [executions tab](https://docs.paradym.id/executing-a-workflow/api-execution#workflow-id). |
 
 ## Running the demo
 
