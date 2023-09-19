@@ -19,8 +19,14 @@ export async function verifyCourseCredentialsWorkflow(course: string) {
       }),
     })
 
+    const data = await response.json()
+
+    if (!response.ok) {
+      return { message: `There was an error. ${data.message}` }
+    }
+
     return {
-      result: await response.json(),
+      result: data,
     }
   } catch (e) {
     return { message: 'There was an error.' }
@@ -45,10 +51,17 @@ export async function issueCourseCredentialWorkflow({
       }),
     })
 
+    const data = await response.json()
+
+    if (!response.ok) {
+      return { message: `There was an error. ${data.message}` }
+    }
+
     return {
-      result: await response.json(),
+      result: data,
     }
   } catch (e) {
+    console.log('error', e)
     return { message: 'There was an error.' }
   }
 }
@@ -59,7 +72,15 @@ export async function getWorkflowExecution(executionId: string) {
       method: 'GET',
     })
 
-    return { result: await response.json() }
+    const data = await response.json()
+
+    if (!response.ok) {
+      return { message: `There was an error. ${data.message}` }
+    }
+
+    return {
+      result: data,
+    }
   } catch (e) {
     return { message: 'There was an error.' }
   }
