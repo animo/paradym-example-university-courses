@@ -16,7 +16,7 @@ export default function CourseStatusBadge({ isCompleted, isEnrolled, isCredentia
               <div className="h-1.5 w-1.5 rounded-full bg-blue-500" />
             )}
           </div>
-          <p className="text-xs leading-5 text-gray-500">{isCredentialReceived ? 'Completed' : 'Credential ready'}</p>
+          <p className="text-xs leading-5 text-gray-500">{isCredentialReceived ? 'Completed' : 'Certificate ready'}</p>
         </div>
       ) : isEnrolled ? (
         <div className="flex items-center gap-x-1.5">

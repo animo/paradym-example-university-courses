@@ -1,0 +1,46 @@
+name: Verify Course Certificate
+
+trigger:
+  type: api
+
+input:
+  type: 'object'
+  properties:
+    course:
+      type: string
+      description: The name of the completed course
+  required:
+    - course
+
+actions:
+  # Setup the connection by showing the QR code in your client
+  - id: createConnection
+    name: didcomm/createConnection@v1
+
+  # Request the course certificate
+  - id: requestPresentation
+    name: didcomm/requestPresentation@v1
+    attributes:
+      connectionId: $.actions.createConnection.output.connection.connectionId
+      anoncreds:
+        name: Course credential request
+        version: '1.0.0'
+        attributes:
+          - names:
+              - course
+            restrictions:
+              - credentialDefinitionId: <YOUR_CREDENTIAL_DEFINITION_ID>
+
+  # Verify that course equals required course
+  - id: verifyCourse
+    name: general/validateJson@v1
+    attributes:
+      data: $.actions.requestPresentation.output.presentationExchange.anoncreds.presentation.attributes[0].value
+      schema:
+        type: object
+        properties:
+          course:
+            const: $.input.course
+        required:
+          - course
+        additionalProperties: true

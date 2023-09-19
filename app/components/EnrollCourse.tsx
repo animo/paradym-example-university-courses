@@ -7,7 +7,6 @@ import { useEffect, useState, useTransition } from 'react'
 import { updateCourse, verifyCourseCredentialsWorkflow } from '@/app/_actions'
 import useWorkflowExecution from '@/hooks/useWorkflowExecution'
 import { Course } from '@/lib/data/types'
-import { hasRequiredCredentials } from '@/lib/utils'
 import Button from '@/ui/Button'
 import Loader from '@/ui/Loader'
 import Modal from '@/ui/Modal'
@@ -68,8 +67,8 @@ const VerificationCompleteContent = ({ hasRequiredCredentials }: { hasRequiredCr
     <Title>Verification received</Title>
     <Paragraph>
       {hasRequiredCredentials
-        ? 'You have been successfully enrolled in this course.'
-        : 'Your credentials did not match the one required for this course.'}
+        ? 'You have successfully enrolled in this course.'
+        : 'Unfortunately your credentials did not match the one required for this course. Please try again later once you have obtained the required course certificates.'}
     </Paragraph>
   </div>
 )
@@ -84,17 +83,15 @@ export default function EnrollCourse({ course }: { course: Course }) {
   const { execution } = useWorkflowExecution(executionId)
 
   const url = execution?.payload.actions?.createConnection?.output?.invitationUrl as string
-  const requestAnswered = execution?.completedActionIds.includes('requestPresentation') ?? false
-  const isRequestSent = execution?.completedActionIds.includes('createConnection') || requestAnswered
-  const hasRequiredCreds =
-    course.requiredCredentials.length !== 0 &&
-    hasRequiredCredentials(course.requiredCredentials[0].name, requestAnswered, execution)
+  const isRequestSent = execution?.completedActionIds.includes('createConnection')
+  const isWorkflowDone = execution?.status === 'completed' || execution?.status === 'failed'
+  const hasRequiredCreds = execution?.status === 'completed'
 
   useEffect(() => {
-    if (requestAnswered) {
+    if (isWorkflowDone) {
       setContentState(ContentState.REQUEST_ANSWERED)
     }
-  }, [requestAnswered])
+  }, [isWorkflowDone])
 
   async function onEnroll() {
     if (course.requiredCredentials.length === 0) {
@@ -106,7 +103,7 @@ export default function EnrollCourse({ course }: { course: Course }) {
 
   async function onStart() {
     setContentState(ContentState.SCAN_QR)
-    const res = await verifyCourseCredentialsWorkflow()
+    const res = await verifyCourseCredentialsWorkflow(course.requiredCredentials[0].name)
     setExecutionId(res.result.id)
   }
 

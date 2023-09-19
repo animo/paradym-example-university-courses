@@ -18,17 +18,6 @@
       "content": "# React 101\n## Introduction\nReact is a JavaScript library for building UI.\n\n## Components\n- Function Components\n- Class Components\n\n## State Management\n- `useState`\n- `useReducer`\n\n## Effects\n- `useEffect`\n- Side-effects\n\n## Context API\n- `createContext`\n- `useContext`\n\n## Advanced Concepts\n- Hooks\n- Higher Order Components\n\n## Testing\n- Jest\n- React Testing Library"
     },
     {
-      "id": "1a1deb4d-3b7d-4god-9bdd-2b0d7b3dc56f",
-      "name": "Introduction to JavaScript",
-      "subTitle": "Learn the fundamentals of JavaScript, the most popular programming language.",
-      "requiredCredentials": [],
-      "isEnrolled": true,
-      "isCompleted": true,
-      "isCredentialReceived": false,
-      "imageUrl": "https://images.unsplash.com/photo-1472437774355-71ab6752b434?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3774&q=80",
-      "content": "## Course Overview\n This course is designed to introduce you to the fundamentals of JavaScript, the most widely used programming language for web development. Whether you're a beginner or looking to refresh your knowledge, you'll learn the essential concepts and techniques needed to build interactive web applications.\n ## Who Should Take This Course? \n - Beginners in Programming\n - Web Developers\n - Anyone interested in JavaScript\n ## What You'll Learn\n - **Basic Syntax**: Understand the syntax and structure of JavaScript.\n - **Variables and Data Types**: Learn how to work with variables and different data types.\n - **Functions and Control Flow**: Create functions and control program flow.\n - **DOM Manipulation**: Interact with web page elements using JavaScript.\n ## Prerequisites\n - No prior programming experience required.\n ## Duration\n - 4 Weeks (2 hours/week)\n ## Course Content\n 1. Introduction to JavaScript\n 2. Variables and Data Types\n 3. Functions and Control Flow\n 4. DOM Manipulation\n Start your journey into web development with JavaScript!\n"
-    },
-    {
       "id": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
       "name": "Introduction to TypeScript",
       "subTitle": "Learn the fundamentals of TypeScript, a statically-typed superset of JavaScript.",
@@ -37,7 +26,7 @@
           "name": "Introduction to JavaScript"
         }
       ],
-      "isEnrolled": true,
+      "isEnrolled": false,
       "isCompleted": false,
       "isCredentialReceived": false,
       "imageUrl": "https://images.unsplash.com/photo-1587620962725-abab7fe55159?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2831&q=80",
@@ -53,6 +42,17 @@
       "isCredentialReceived": false,
       "imageUrl": "https://images.unsplash.com/photo-1658274474930-bb27a64022c2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2574&q=80",
       "content": "## Course Overview\n This comprehensive course will make you proficient in Rust, a powerful systems programming language known for its safety and performance. Whether you're a seasoned developer or new to systems programming, this course will teach you the essentials of Rust and help you build high-performance applications.\n ## Who Should Take This Course? \n - Software Developers\n - System Programmers\n - Game Developers\n ## What You'll Learn\n - **Ownership and Borrowing**: Master Rust's unique memory management system.\n - **Concurrency**: Build concurrent and parallel programs with confidence.\n - **Rust Ecosystem**: Explore libraries and tools for various domains.\n - **Advanced Topics**: Dive into advanced Rust features like macros and FFI.\n ## Prerequisites\n - Proficiency in a programming language (e.g., JavaScript, C++, or Python)\n ## Duration\n - 10 Weeks (5 hours/week)\n ## Course Content\n 1. Introduction to Rust\n 2. Ownership and Borrowing\n 3. Concurrency in Rust\n 4. Building Real-world Rust Applications\n Elevate your programming skills with Rust - the language of safety and performance!\n"
+    },
+    {
+      "id": "1a1deb4d-3b7d-4god-9bdd-2b0d7b3dc56f",
+      "name": "Introduction to JavaScript",
+      "subTitle": "Learn the fundamentals of JavaScript, the most popular programming language.",
+      "requiredCredentials": [],
+      "isEnrolled": true,
+      "isCompleted": true,
+      "isCredentialReceived": true,
+      "imageUrl": "https://images.unsplash.com/photo-1472437774355-71ab6752b434?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3774&q=80",
+      "content": "## Course Overview\n This course is designed to introduce you to the fundamentals of JavaScript, the most widely used programming language for web development. Whether you're a beginner or looking to refresh your knowledge, you'll learn the essential concepts and techniques needed to build interactive web applications.\n ## Who Should Take This Course? \n - Beginners in Programming\n - Web Developers\n - Anyone interested in JavaScript\n ## What You'll Learn\n - **Basic Syntax**: Understand the syntax and structure of JavaScript.\n - **Variables and Data Types**: Learn how to work with variables and different data types.\n - **Functions and Control Flow**: Create functions and control program flow.\n - **DOM Manipulation**: Interact with web page elements using JavaScript.\n ## Prerequisites\n - No prior programming experience required.\n ## Duration\n - 4 Weeks (2 hours/week)\n ## Course Content\n 1. Introduction to JavaScript\n 2. Variables and Data Types\n 3. Functions and Control Flow\n 4. DOM Manipulation\n Start your journey into web development with JavaScript!\n"
     },
     {
       "id": "12345678-1234-1234-1234-123456789abc",

@@ -2,21 +2,20 @@
 
 import { revalidateTag } from 'next/cache'
 
+import { ISSUE_COURSE_CERTIFICATE_WORKFLOW_ID, VERIFY_COURSE_CERTIFICATE_WORKFLOW_ID } from '@/constants'
 import { updateCourseById } from '@/lib/data/courses'
 import { Course } from '@/lib/data/types'
 import { paradymFetch } from '@/lib/fetch'
 
-// Set the ID's of your created workflows
-const ISSUE_COURSE_CREDENTIAL_WORKFLOW_ID = 'clmj6lojn000fs601sq3m5ibd'
-const VERIFY_COURSE_CREDENTIALS_WORKFLOW_ID = 'clmkcx7ou002fs6011j5mm405'
-
-export async function verifyCourseCredentialsWorkflow() {
+export async function verifyCourseCredentialsWorkflow(course: string) {
   try {
     const response = await paradymFetch('/executions', {
       method: 'POST',
       body: JSON.stringify({
-        workflowId: VERIFY_COURSE_CREDENTIALS_WORKFLOW_ID,
-        input: {},
+        workflowId: VERIFY_COURSE_CERTIFICATE_WORKFLOW_ID,
+        input: {
+          course,
+        },
       }),
     })
 
@@ -41,7 +40,7 @@ export async function issueCourseCredentialWorkflow({
     const response = await paradymFetch('/executions', {
       method: 'POST',
       body: JSON.stringify({
-        workflowId: ISSUE_COURSE_CREDENTIAL_WORKFLOW_ID,
+        workflowId: ISSUE_COURSE_CERTIFICATE_WORKFLOW_ID,
         input: { name, course, studentNumber },
       }),
     })

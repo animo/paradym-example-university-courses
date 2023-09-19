@@ -87,6 +87,10 @@ export default function ReceiveCredential({ student, course }: { student: Studen
       name: student.name,
       course: course.name,
     })
+
+    // Alert if error message is present
+    if (res.result.message) alert(res.result.message)
+
     setExecutionId(res.result.id)
   }
 
@@ -103,7 +107,7 @@ export default function ReceiveCredential({ student, course }: { student: Studen
   return (
     <>
       <Button onClick={() => setIsModalOpen(true)} disabled={!course.isCompleted || course.isCredentialReceived}>
-        {course.isCredentialReceived ? 'Credential received' : 'Receive Credential'}
+        {course.isCredentialReceived ? 'Certificate received' : 'Claim Certificate'}
       </Button>
       <Modal open={isModalOpen} setOpen={setIsModalOpen} className="flex h-[440px] flex-col justify-between p-8">
         {contentState === ContentState.START && <StarterContent />}
