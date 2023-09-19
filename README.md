@@ -1,34 +1,51 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<p align="center">
+  <br />
+<img src="/public/app-screenshot.png" alt="screenshot-demo" height="600px"/>
 
-## Getting Started
+</p>
 
-First, run the development server:
+# Issue and Verify Credentials with Paradym
+
+Easily integrate [Paradym](https://paradym.id) workflows into your frontend application with this demo. Enroll in university courses by proving prior course completions.
+
+## Before you begin
+
+This demo uses [Paradym](https://paradym.id), a workflow builder for developers that provides the actions, workflows and infrastructure you need to use verifiable credentials in your solution.
+
+If you don't have an account yet, you can start with our [quick start guide](https://docs.paradym.id/).
+
+This demo also uses the [Paradym Wallet](https://docs.paradym.id/integrating-with-a-holder-wallet/paradym-wallet), an open source companion app to the Paradym platform available on the [Apple App Store](https://apps.apple.com/nl/app/paradym-wallet/id6449846111?l=en) and [Google Play Store](https://play.google.com/store/apps/details?id=id.paradym.wallet).
+
+## Prerequisites
+
+Before you can start, you need to set the environment variables:
 
 ```bash
-npm run dev
-# or
+cp .env.example .env.local
+```
+
+The environment variables consist of your Paradym API Key, and the ID's of the workflows used in this application. All workflows used for this demo application can be found in the `/paradym` folder.
+
+Once you have created the workflows in the Paradym dashboard, you can copy the workflow ID's from Paradym and set them as environment variables. **Make sure your workflows are 'published'.**
+
+| Variable                                | Description                                                                                                                                                                                                                   |
+| --------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `PARADYM_API_KEY`                       | This is the API key used to send request to Paradym. You can generate your API key in the settings tab on the Paradym dashboard as described in [here](https://docs.paradym.id/executing-a-workflow/api-execution#api-key).   |
+| `ISSUE_COURSE_CREDENTIAL_WORKFLOW_ID`   | This is the ID of the issue course credential workflow. Once you have created the workflow in Paradym you can copy the ID from the [executions tab](https://docs.paradym.id/executing-a-workflow/api-execution#workflow-id).  |
+| `VERIFY_COURSE_CREDENTIALS_WORKFLOW_ID` | This is the ID of the verify course credential workflow. Once you have created the workflow in Paradym you can copy the ID from the [executions tab](https://docs.paradym.id/executing-a-workflow/api-execution#workflow-id). |
+
+## Running the demo
+
+First, run `yarn` to install the dependencies:
+
+```bash
+yarn
+```
+
+You can then run the development server:
+
+```bash
 yarn dev
-# or
-pnpm dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
