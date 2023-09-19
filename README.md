@@ -18,15 +18,44 @@ This demo also uses the [Paradym Wallet](https://docs.paradym.id/integrating-wit
 
 ## Prerequisites
 
-Before you can start, you need to set the environment variables:
+### Setup your workflows
+
+The demo app requires 3 workflows. All workflows used for this demo application can be found in the `/paradym` folder.
+
+- **Register Credential Template**: workflow used to register your credential schema and definition. The result of this workflow is used in the other 2 workflows.
+- **Issue Cource Certificate**: workflow used to issue a course credential once the course is completed.
+- **Verify Course Certificate**: workflow used to request and validate the required credentials for a course.
+
+#### Step 1: Register your credential information
+
+- Create a new workflow in Paradym with the name Register Credential Template.
+- Copy the contents from `registerCredentialTemplate.yaml` into your created workflow.
+- Publish the workflow.
+- Execute the workflow via the executions tab.
+- Click on the execution to view the result of your workflow.
+- Copy the `credentialDefinitionId` from the result and save the value for later.
+
+#### Step 2: Create the other workflows
+
+Next, you need to create the other 2 workflows: Issue Course Certificate and Verify Course Certificate.
+
+- Copy the contents from `.yaml` files from the `paradym` directory and create the workflows.
+- Replace the `<YOUR_CREDENTIAL_DEFINITION_ID>` values with the `credentialDefinitionId` value from step 1 for both workflows.
+- Publish the workflows.
+
+Once you have created the workflows in the Paradym dashboard, you can copy the workflow ID's from Paradym and set them as environment variables.
+
+#### Step 3: Create your Paradym API Key
+
+You can generate your API key in the settings tab on the Paradym dashboard as described in [here](https://docs.paradym.id/executing-a-workflow/api-execution#api-key).
+
+#### Step 4: Set the environment variables
+
+The environment variables consist of your Paradym API Key, and the ID's of the workflows just created. Once you have created the workflows in the Paradym dashboard, you can copy the workflow ID's from Paradym and set them as environment variables.
 
 ```bash
 cp .env.example .env.local
 ```
-
-The environment variables consist of your Paradym API Key, and the ID's of the workflows used in this application. All workflows used for this demo application can be found in the `/paradym` folder.
-
-Once you have created the workflows in the Paradym dashboard, you can copy the workflow ID's from Paradym and set them as environment variables. **Make sure your workflows are 'published'.**
 
 | Variable                                | Description                                                                                                                                                                                                                   |
 | --------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
