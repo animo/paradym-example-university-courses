@@ -4,7 +4,7 @@
 
 </p>
 
-# Issue and Verify Credentials with Paradym
+<h1 align="center"><b>Issue and verify credentials with Paradym</b></h1>
 
 Easily integrate [Paradym](https://paradym.id) workflows into your frontend application with this demo. Enroll in university courses by proving prior course completions.
 
