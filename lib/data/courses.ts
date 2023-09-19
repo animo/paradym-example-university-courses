@@ -2,12 +2,12 @@
 
 import { promises as fs } from 'fs'
 
+import { getOrCreateData } from './getOrCreate'
+
 import { Course } from '@/lib/data/types'
 
 export const getCourses = async () => {
-  const jsonData = await fs.readFile(process.cwd() + '/lib/data/data.json', 'utf8')
-
-  const courses = JSON.parse(jsonData).courses as Course[]
+  const { courses } = await getOrCreateData()
 
   return courses.sort(
     (a, b) =>
@@ -40,9 +40,4 @@ export const updateCourseById = async (id: string, updatedCourse: Partial<Course
   await fs.writeFile(process.cwd() + '/lib/data/data.json', JSON.stringify(updatedData, null, 2), 'utf8')
 
   return courses[courseIndex]
-}
-
-export const resetToInit = async () => {
-  const initData = await fs.readFile(process.cwd() + '/lib/data/init.json', 'utf8')
-  await fs.writeFile(process.cwd() + '/lib/data/data.json', initData, 'utf8')
 }

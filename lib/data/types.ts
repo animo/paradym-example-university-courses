@@ -17,3 +17,8 @@ export type Student = {
   imageUrl: string
   email: string
 }
+
+export type Data = {
+  student: Student
+  courses: Course[]
+}

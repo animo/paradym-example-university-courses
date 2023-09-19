@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation'
 
-import { resetToInit } from '@/lib/data/courses'
+import { resetToInit } from '@/lib/data/getOrCreate'
 
 export default function Footer() {
   const router = useRouter()

@@ -1,9 +1,7 @@
-import { promises as fs } from 'fs'
-
-import { Student } from '@/lib/data/types'
+import { getOrCreateData } from './getOrCreate'
 
 export const getStudent = async () => {
-  const jsonData = await fs.readFile(process.cwd() + '/lib/data/data.json', 'utf8')
+  const { student } = await getOrCreateData()
 
-  return JSON.parse(jsonData).student as Student
+  return student
 }
