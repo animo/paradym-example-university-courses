@@ -4,13 +4,9 @@
 
 </p>
 
-<h1 align="center"><b>Issue and verify credentials with Paradym</b></h1>
+# Issue and Verify Credentials with Paradym
 
-This repository contains a demo application that integrates [Paradym](https://paradym.id) workflows into a frontend application.
-
-The demo application allows you to enroll into university courses by proving you have completed other courses. You can complete a course by pressing the 'Complete Course' button at the bottom of the course page.
-
-Once you have completed a course, you are eligible to claim your course certificate. You can then verify these certificates to enroll into other courses.
+Easily integrate [Paradym](https://paradym.id) workflows into your frontend application with this demo. Enroll in university courses by proving prior course completions.
 
 ## Before you begin
 
@@ -53,12 +49,3 @@ yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-## Resources
-
-To learn more about Paradym, take a look at the following resources:
-
-- [Paradym](https://paradym.id) - the paradym website
-- [Paradym Documentation](https://docs.paradym.id) - learn how to use Paradym.
-
-You can find more about Paradym on [our website](https://paradym.id) - your feedback and contributions are welcome!
