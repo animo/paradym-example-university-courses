@@ -41,3 +41,8 @@ export const updateCourseById = async (id: string, updatedCourse: Partial<Course
 
   return courses[courseIndex]
 }
+
+export const resetToInit = async () => {
+  const initData = await fs.readFile(process.cwd() + '/lib/data/init.json', 'utf8')
+  await fs.writeFile(process.cwd() + '/lib/data/data.json', initData, 'utf8')
+}

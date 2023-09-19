@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 
 import { Inter } from 'next/font/google'
 
+import Footer from '@/app/components/Footer'
 import Header from '@/app/components/Header'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -22,6 +23,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <Header />
         <div className="bg-grey-50 min-h-screen">{children}</div>
+        <Footer />
       </body>
     </html>
   )
