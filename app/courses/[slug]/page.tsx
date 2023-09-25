@@ -35,14 +35,18 @@ export default async function Course({ params }: { params: { slug: string } }) {
         <div>
           <Title variant="small">Required credentials</Title>
           <ul>
-            {course.requiredCredentials.map((c) => (
-              <li key={c.name}>
-                <Paragraph className="inline">
-                  <span className="pr-2 font-bold">•</span>
-                  {c.name}
-                </Paragraph>
-              </li>
-            ))}
+            {course.requiredCredentials.length > 0 ? (
+              course.requiredCredentials.map((c) => (
+                <li key={c.name}>
+                  <Paragraph className="inline">
+                    <span className="pr-2 font-bold">•</span>
+                    {c.name}
+                  </Paragraph>
+                </li>
+              ))
+            ) : (
+              <span className="text-sm">None</span>
+            )}
           </ul>
         </div>
         {course.isEnrolled ? <ReceiveCredential student={student} course={course} /> : <EnrollCourse course={course} />}

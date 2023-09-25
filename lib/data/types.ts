@@ -7,7 +7,7 @@ export type Course = {
   isCredentialReceived: boolean
   imageUrl: string
   content: string
-  requiredCredentials: Array<{ name: string }>
+  requiredCredentials: Array<{ id: string; name: string }>
   credentialDefinition: string
 }
 

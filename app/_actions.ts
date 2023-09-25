@@ -7,14 +7,21 @@ import { updateCourseById } from '@/lib/data/courses'
 import { Course } from '@/lib/data/types'
 import { paradymFetch } from '@/lib/fetch'
 
-export async function verifyCourseCredentialsWorkflow(course: string) {
+export async function verifyCourseCredentialsWorkflow({
+  courseId,
+  requiredCourseId,
+}: {
+  courseId: string
+  requiredCourseId: string
+}) {
   try {
     const response = await paradymFetch('/executions', {
       method: 'POST',
       body: JSON.stringify({
         workflowId: VERIFY_COURSE_CERTIFICATE_WORKFLOW_ID,
         input: {
-          course,
+          courseId,
+          requiredCourseId,
         },
       }),
     })
@@ -35,19 +42,21 @@ export async function verifyCourseCredentialsWorkflow(course: string) {
 
 export async function issueCourseCredentialWorkflow({
   studentNumber,
-  name,
-  course,
+  studentName,
+  courseId,
+  courseName,
 }: {
   studentNumber: string
-  name: string
-  course: string
+  studentName: string
+  courseId: string
+  courseName: string
 }) {
   try {
     const response = await paradymFetch('/executions', {
       method: 'POST',
       body: JSON.stringify({
         workflowId: ISSUE_COURSE_CERTIFICATE_WORKFLOW_ID,
-        input: { name, course, studentNumber },
+        input: { studentNumber, studentName, courseId, courseName },
       }),
     })
 
@@ -61,7 +70,6 @@ export async function issueCourseCredentialWorkflow({
       result: data,
     }
   } catch (e) {
-    console.log('error', e)
     return { message: 'There was an error.' }
   }
 }

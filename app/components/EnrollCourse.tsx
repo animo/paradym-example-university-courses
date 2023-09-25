@@ -1,14 +1,14 @@
 'use client'
 
+import { NoSymbolIcon, ShieldCheckIcon } from '@heroicons/react/24/solid'
 import { useRouter } from 'next/navigation'
-import { useQRCode } from 'next-qrcode'
 import { useEffect, useState, useTransition } from 'react'
 
 import { updateCourse, verifyCourseCredentialsWorkflow } from '@/app/_actions'
+import ScanQr from '@/app/components/ModalStates/ScanQr'
 import useWorkflowExecution from '@/hooks/useWorkflowExecution'
 import { Course } from '@/lib/data/types'
 import Button from '@/ui/Button'
-import Loader from '@/ui/Loader'
 import Modal from '@/ui/Modal'
 import Paragraph from '@/ui/Paragraph'
 import Title from '@/ui/Title'
@@ -16,10 +16,11 @@ import Title from '@/ui/Title'
 enum ContentState {
   START,
   SCAN_QR,
-  REQUEST_ANSWERED,
+  SUCCESS,
+  FAILED,
 }
 
-const StartContent = () => (
+const StarterContent = () => (
   <div>
     <Title>Enroll into a course</Title>
     <Paragraph>
@@ -32,45 +33,33 @@ const StartContent = () => (
   </div>
 )
 
-const ScanQRContent = ({ url, isRequestSent }: { url: string; isRequestSent?: boolean }) => {
-  const { Canvas } = useQRCode()
-  return (
-    <div className="flex h-full flex-col">
-      <div>
-        <Title>Scan the QR Code</Title>
-        <Paragraph>Use the Paradym Wallet to scan the QR code below.</Paragraph>
-      </div>
-      <div className="flex grow items-center justify-center">
-        {url ? (
-          isRequestSent ? (
-            <Paragraph>Accept the request in your wallet.</Paragraph>
-          ) : (
-            <Canvas
-              text={url}
-              options={{
-                errorCorrectionLevel: 'M',
-                scale: 4,
-                width: 196,
-              }}
-            />
-          )
-        ) : (
-          <Loader />
-        )}
-      </div>
+const VerificationCompleted = () => (
+  <>
+    <div>
+      <Title>Course successfully verified</Title>
+      <Paragraph>
+        Your course certificate has been successfully verified. You will now be enrolled in the course.
+      </Paragraph>
     </div>
-  )
-}
+    <div className="flex h-full items-center justify-center pt-4">
+      <ShieldCheckIcon className="h-24 w-24 text-indigo-500" />
+    </div>
+  </>
+)
 
-const VerificationCompleteContent = ({ hasRequiredCredentials }: { hasRequiredCredentials: boolean }) => (
-  <div>
-    <Title>Verification received</Title>
-    <Paragraph>
-      {hasRequiredCredentials
-        ? 'You have successfully enrolled in this course.'
-        : 'Unfortunately your credentials did not match the one required for this course. Please try again later once you have obtained the required course certificates.'}
-    </Paragraph>
-  </div>
+const VerificationFailed = () => (
+  <>
+    <div>
+      <Title>That did not go well</Title>
+      <Paragraph>
+        Unfortunately your credentials did not match the one required for this course. Please try again later once you
+        have obtained the required course certificates.
+      </Paragraph>
+    </div>
+    <div className="-mt-2 flex h-full items-center justify-center">
+      <NoSymbolIcon className="h-24 w-24 text-gray-500" />
+    </div>
+  </>
 )
 
 export default function EnrollCourse({ course }: { course: Course }) {
@@ -84,14 +73,11 @@ export default function EnrollCourse({ course }: { course: Course }) {
 
   const url = execution?.payload.actions?.createConnection?.output?.invitationUrl as string
   const isRequestSent = execution?.completedActionIds.includes('createConnection')
-  const isWorkflowDone = execution?.status === 'completed' || execution?.status === 'failed'
-  const hasRequiredCreds = execution?.status === 'completed'
 
   useEffect(() => {
-    if (isWorkflowDone) {
-      setContentState(ContentState.REQUEST_ANSWERED)
-    }
-  }, [isWorkflowDone])
+    if (execution?.status === 'completed') setContentState(ContentState.SUCCESS)
+    if (execution?.status === 'failed') setContentState(ContentState.FAILED)
+  }, [execution?.status])
 
   async function onEnroll() {
     if (course.requiredCredentials.length === 0) {
@@ -103,17 +89,17 @@ export default function EnrollCourse({ course }: { course: Course }) {
 
   async function onStart() {
     setContentState(ContentState.SCAN_QR)
-    const res = await verifyCourseCredentialsWorkflow(course.requiredCredentials[0].name)
+    const res = await verifyCourseCredentialsWorkflow({
+      courseId: course.id,
+      requiredCourseId: course.requiredCredentials[0].id,
+    })
     setExecutionId(res.result.id)
   }
 
   function onClose() {
-    if (hasRequiredCreds) {
-      updateCourse(course.id, { isEnrolled: true })
-      startTransition(() => {
-        router.refresh()
-      })
-    }
+    startTransition(() => {
+      router.refresh()
+    })
     setIsEnrollModalOpen(false)
     setExecutionId('')
 
@@ -128,24 +114,20 @@ export default function EnrollCourse({ course }: { course: Course }) {
       <form action={onEnroll} className="grid">
         <Button disabled={course.isCompleted || course.isCredentialReceived}>Enroll</Button>
       </form>
-      <Modal
-        open={isEnrollModalOpen}
-        setOpen={setIsEnrollModalOpen}
-        className="flex h-[440px] flex-col justify-between p-8"
-      >
-        {ContentState.START === contentState && <StartContent />}
-        {ContentState.SCAN_QR === contentState && <ScanQRContent url={url} isRequestSent={isRequestSent} />}
-        {ContentState.REQUEST_ANSWERED === contentState && (
-          <VerificationCompleteContent hasRequiredCredentials={hasRequiredCreds} />
-        )}
+      <Modal open={isEnrollModalOpen} setOpen={setIsEnrollModalOpen}>
+        {contentState === ContentState.START && <StarterContent />}
+        {contentState === ContentState.SCAN_QR && <ScanQr url={url} isRequestSent={isRequestSent} />}
+        {contentState === ContentState.SUCCESS && <VerificationCompleted />}
+        {contentState === ContentState.FAILED && <VerificationFailed />}
 
+        {/* Render suitable button for content state */}
         {contentState === ContentState.START ? (
           <Button type="submit" onClick={onStart}>
             I&apos;m Ready!
           </Button>
         ) : (
           <Button onClick={onClose} type="submit">
-            {contentState === ContentState.REQUEST_ANSWERED ? 'Close' : 'Cancel'}
+            {[ContentState.SUCCESS, ContentState.FAILED].includes(contentState) ? 'Close' : 'Cancel'}
           </Button>
         )}
       </Modal>

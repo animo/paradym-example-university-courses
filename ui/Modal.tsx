@@ -11,7 +11,7 @@ export interface ModalProps {
 }
 
 const baseStyle =
-  'relative transform overflow-hidden rounded-lg bg-white dark:bg-grey-900 text-left shadow-xl transition-all sm:w-full sm:max-w-lg border border-grey-300 dark:border-grey-700'
+  'relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:w-full sm:max-w-lg border border-grey-300'
 
 export default function Modal({ open, setOpen, className, ...props }: PropsWithChildren<ModalProps>) {
   const cancelButtonRef = useRef(null)
@@ -43,7 +43,9 @@ export default function Modal({ open, setOpen, className, ...props }: PropsWithC
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className={className}>{props.children}</Dialog.Panel>
+              <Dialog.Panel className={clsx('flex h-[32rem] flex-col justify-between p-8', className)}>
+                {props.children}
+              </Dialog.Panel>
             </Transition.Child>
           </div>
         </div>
