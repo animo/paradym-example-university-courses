@@ -41,7 +41,7 @@ const VerificationCompleted = () => (
         Your course certificate has been successfully verified. You will now be enrolled in the course.
       </Paragraph>
     </div>
-    <div className="flex h-full items-center justify-center pt-4">
+    <div className="-mt-6 flex h-full items-center justify-center pt-4">
       <ShieldCheckIcon className="h-24 w-24 text-indigo-500" />
     </div>
   </>
@@ -56,7 +56,7 @@ const VerificationFailed = () => (
         have obtained the required course certificates.
       </Paragraph>
     </div>
-    <div className="-mt-2 flex h-full items-center justify-center">
+    <div className="-mt-4 flex h-full items-center justify-center">
       <NoSymbolIcon className="h-24 w-24 text-gray-500" />
     </div>
   </>

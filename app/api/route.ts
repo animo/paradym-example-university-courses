@@ -10,11 +10,9 @@ import { paradymFetch } from '@/lib/fetch'
 
 export async function POST(request: Request) {
   try {
-    // FIXME: Webhook protection does not work.
-    // issue is probably in body parser
     const rawBody = await request.text()
     const rawBodyBuffer = Buffer.from(rawBody, 'utf-8')
-    const bodySignature = sha1(rawBodyBuffer, PARADYM_WEBHOOK_SECRET)
+    const bodySignature = sha256(rawBodyBuffer, PARADYM_WEBHOOK_SECRET)
 
     if (bodySignature !== request.headers.get('X-Paradym-HMAC-SHA-256')) {
       return Response.json({
@@ -23,7 +21,7 @@ export async function POST(request: Request) {
       })
     }
 
-    const json = await request.json()
+    const json = JSON.parse(rawBodyBuffer.toString('utf-8'))
 
     const workflowExecutionId = json.payload.workflowExecutionId
     const workflowId = json.payload.workflowId
@@ -53,12 +51,6 @@ export async function POST(request: Request) {
   }
 }
 
-function sha1(data: Buffer, secret: string): string {
-  return crypto.createHmac('sha1', secret).update(data).digest('hex')
-}
-
-export const config = {
-  api: {
-    bodyParser: false,
-  },
+function sha256(data: Buffer, secret: string): string {
+  return crypto.createHmac('sha256', secret).update(data).digest('hex')
 }
