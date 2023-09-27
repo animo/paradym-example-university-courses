@@ -123,7 +123,7 @@ export default function EnrollCourse({ course }: { course: Course }) {
         {/* Render suitable button for content state */}
         {contentState === ContentState.START ? (
           <Button type="submit" onClick={onStart}>
-            I&apos;m Ready!
+            I&apos;m ready!
           </Button>
         ) : (
           <Button onClick={onClose} type="submit">
