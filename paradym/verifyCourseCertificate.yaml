@@ -1,4 +1,4 @@
-name: Verify Course Certificate
+name: Verify course completion
 
 trigger:
   type: api
@@ -6,16 +6,22 @@ trigger:
 input:
   type: 'object'
   properties:
-    course:
+    courseId:
       type: string
-      description: The name of the completed course
+      description: The id of the course to enroll in
+    requiredCourseId:
+      type: string
+      description: The id of the required course
   required:
-    - course
+    - courseId
+    - requiredCourseId
 
 actions:
-  # Setup the connection by showing the QR code in your client
+  # Setup the connection by showing the invitationUrl as a QR code in your client
   - id: createConnection
     name: didcomm/createConnection@v1
+    attributes:
+      label: Silicon University
 
   # Request the course certificate
   - id: requestPresentation
@@ -27,11 +33,11 @@ actions:
         version: '1.0.0'
         attributes:
           - names:
-              - course
+              - courseId
             restrictions:
               - credentialDefinitionId: <YOUR_CREDENTIAL_DEFINITION_ID>
 
-  # Verify that course equals required course
+  # Verify that course identifier equals required course identifier
   - id: verifyCourse
     name: general/validateJson@v1
     attributes:
@@ -39,8 +45,8 @@ actions:
       schema:
         type: object
         properties:
-          course:
-            const: $.input.course
+          courseId:
+            const: $.input.requiredCourseId
         required:
-          - course
+          - courseId
         additionalProperties: true

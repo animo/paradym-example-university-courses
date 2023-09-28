@@ -2,6 +2,7 @@ import { AcademicCapIcon } from '@heroicons/react/24/solid'
 import Link from 'next/link'
 
 import NavigationItems from '@/app/components/NavigationItems'
+import ProfileDropdown from '@/app/components/ProfileDropdown'
 import { getStudent } from '@/lib/data/student'
 import Container from '@/ui/Container'
 
@@ -17,8 +18,7 @@ export default async function Header() {
           </Link>
           <NavigationItems />
         </div>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img className="h-8 w-8 rounded-full" src={student.imageUrl} alt="Profile picture" />
+        <ProfileDropdown imageUrl={student.imageUrl} />
       </Container>
     </header>
   )

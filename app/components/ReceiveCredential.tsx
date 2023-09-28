@@ -1,13 +1,15 @@
 'use client'
 
-import { useQRCode } from 'next-qrcode'
-import { useEffect, useState } from 'react'
+import { ShieldCheckIcon } from '@heroicons/react/24/solid'
+import { useRouter } from 'next/navigation'
+import { useEffect, useState, useTransition } from 'react'
 
-import { issueCourseCredentialWorkflow, updateCourse } from '@/app/_actions'
+import { issueCourseCredentialWorkflow } from '@/app/_actions'
+import ScanQr from '@/app/components/ModalStates/ScanQr'
+import WorkflowFailed from '@/app/components/ModalStates/WorkflowFailed'
 import useWorkflowExecution from '@/hooks/useWorkflowExecution'
 import { Course, Student } from '@/lib/data/types'
 import Button from '@/ui/Button'
-import Loader from '@/ui/Loader'
 import Modal from '@/ui/Modal'
 import Paragraph from '@/ui/Paragraph'
 import Title from '@/ui/Title'
@@ -16,11 +18,12 @@ enum ContentState {
   START,
   SCAN_QR,
   RECEIVED,
+  FAILED,
 }
 
 const StarterContent = () => (
   <div>
-    <Title>Receive your course certificate</Title>
+    <Title>Claim your certificate</Title>
     <Paragraph>
       Congratulations on completing the course! Grab your phone and install{' '}
       <a href="https://linktr.ee/paradym_id" className="font-medium underline" target="_blank">
@@ -31,37 +34,16 @@ const StarterContent = () => (
   </div>
 )
 
-const ScanQRContent = ({ url }: { url: string }) => {
-  const { Canvas } = useQRCode()
-  return (
-    <div className="flex h-full flex-col">
-      <div>
-        <Title>Scan the QR Code</Title>
-        <Paragraph>Use the Paradym Wallet to scan the QR code below.</Paragraph>
-      </div>
-      <div className="flex grow items-center justify-center">
-        {url ? (
-          <Canvas
-            text={url}
-            options={{
-              errorCorrectionLevel: 'M',
-              scale: 4,
-              width: 196,
-            }}
-          />
-        ) : (
-          <Loader />
-        )}
-      </div>
+const CertificateReceived = () => (
+  <>
+    <div>
+      <Title>Certificate issued!</Title>
+      <Paragraph>Your course certificate has been saved in your wallet. You can now close this window.</Paragraph>
     </div>
-  )
-}
-
-const CredentialReceived = () => (
-  <div>
-    <Title>Certificate issuance completed</Title>
-    <Paragraph>Your course certificate has been saved in your wallet. You can now close this window.</Paragraph>
-  </div>
+    <div className="flex h-full items-center justify-center">
+      <ShieldCheckIcon className="h-24 w-24 text-indigo-500" />
+    </div>
+  </>
 )
 
 export default function ReceiveCredential({ student, course }: { student: Student; course: Course }) {
@@ -69,23 +51,25 @@ export default function ReceiveCredential({ student, course }: { student: Studen
   const [executionId, setExecutionId] = useState('')
   const [contentState, setContentState] = useState(ContentState.START)
 
+  const router = useRouter()
+  const [_, startTransition] = useTransition()
   const { execution } = useWorkflowExecution(executionId)
   const url = execution?.payload.actions?.createConnection?.output?.invitationUrl as string
   const credentialIssued = execution?.completedActionIds.includes('issueCredential')
+  const isRequestSent = execution?.completedActionIds.includes('createConnection')
 
   useEffect(() => {
-    if (credentialIssued) {
-      updateCourse(course.id, { isCredentialReceived: true })
-      setContentState(ContentState.RECEIVED)
-    }
-  }, [course.id, credentialIssued])
+    if (execution?.status === 'failed') setContentState(ContentState.FAILED)
+    if (credentialIssued) setContentState(ContentState.RECEIVED)
+  }, [execution, credentialIssued])
 
   const onIssue = async () => {
     setContentState(ContentState.SCAN_QR)
     const res = await issueCourseCredentialWorkflow({
       studentNumber: student.studentNumber,
-      name: student.name,
-      course: course.name,
+      studentName: student.name,
+      courseId: course.id,
+      courseName: course.name,
     })
 
     // Alert if error message is present
@@ -97,6 +81,9 @@ export default function ReceiveCredential({ student, course }: { student: Studen
   const onClose = () => {
     setIsModalOpen(false)
     setExecutionId('')
+    startTransition(() => {
+      router.refresh()
+    })
 
     // Delay so the start content is not showed before the modal is closed
     setTimeout(() => {
@@ -107,19 +94,22 @@ export default function ReceiveCredential({ student, course }: { student: Studen
   return (
     <>
       <Button onClick={() => setIsModalOpen(true)} disabled={!course.isCompleted || course.isCredentialReceived}>
-        {course.isCredentialReceived ? 'Certificate received' : 'Claim Certificate'}
+        {course.isCredentialReceived ? 'Certificate received' : 'Claim certificate'}
       </Button>
-      <Modal open={isModalOpen} setOpen={setIsModalOpen} className="flex h-[440px] flex-col justify-between p-8">
+      <Modal open={isModalOpen} setOpen={setIsModalOpen}>
         {contentState === ContentState.START && <StarterContent />}
-        {contentState === ContentState.SCAN_QR && <ScanQRContent url={url} />}
-        {contentState === ContentState.RECEIVED && <CredentialReceived />}
+        {contentState === ContentState.SCAN_QR && <ScanQr url={url} isRequestSent={isRequestSent} />}
+        {contentState === ContentState.RECEIVED && <CertificateReceived />}
+        {contentState === ContentState.FAILED && <WorkflowFailed />}
+
+        {/* Render suitable button for content state */}
         {contentState === ContentState.START ? (
           <Button type="submit" onClick={onIssue}>
-            I&apos;m Ready!
+            Let&apos;s go!
           </Button>
         ) : (
           <Button onClick={onClose} type="submit">
-            {contentState === ContentState.RECEIVED ? 'Close' : 'Cancel'}
+            {[ContentState.RECEIVED, ContentState.FAILED].includes(contentState) ? 'Close' : 'Cancel'}
           </Button>
         )}
       </Modal>

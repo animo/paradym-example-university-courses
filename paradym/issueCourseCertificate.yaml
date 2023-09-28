@@ -1,6 +1,5 @@
-name: Issue Course Certificate
+name: Issue course certificate
 
-# Workflow can be triggered through the API
 trigger:
   type: api
 
@@ -10,31 +9,38 @@ input:
     studentNumber:
       type: string
       description: The student number
-    name:
+    studentName:
       type: string
       description: The name of the student
-    course:
+    courseId:
       type: string
-      description: The course name
+      description: The id of the course
+    courseName:
+      type: string
+      description: The name of the course
   required:
     - studentNumber
-    - name
-    - course
+    - studentName
+    - courseId
+    - courseName
 
 actions:
-  # Setup the connection by showing the QR code in your client
+  # Setup the connection by showing the invitationUrl as a QR code in your client
   - id: createConnection
     name: didcomm/createConnection@v1
+    attributes:
+      label: Silicon University
 
-  # Issue the course credential
+  # Issue the course credential with the connection
   - id: issueCredential
     name: didcomm/issueCredential@v1
     attributes:
       connectionId: $.actions.createConnection.output.connection.connectionId
       anoncreds:
-        # Make sure the credential template is created with the same attributes (name, course, studentNumber) as used below.
+        # Make sure the credential template is created with the same attributes (studentName, studentNumber, courseId, courseName) as used below.
         credentialDefinitionId: <YOUR_CREDENTIAL_DEFINITION_ID>
         attributes:
+          courseId: $.input.courseId
+          courseName: $.input.courseName
           studentNumber: $.input.studentNumber
-          name: $.input.name
-          course: $.input.course
+          studentName: $.input.studentName

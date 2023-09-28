@@ -41,3 +41,22 @@ export const updateCourseById = async (id: string, updatedCourse: Partial<Course
 
   return courses[courseIndex]
 }
+
+export const updateCourseByName = async (name: string, updatedCourse: Partial<Course>) => {
+  const courses = await getCourses()
+  const courseIndex = courses.findIndex((c) => c.name === name)
+
+  if (courseIndex === -1) return null
+
+  courses[courseIndex] = { ...courses[courseIndex], ...updatedCourse }
+
+  // Update the JSON file with the modified data
+  const updatedData = {
+    ...JSON.parse(await fs.readFile(process.cwd() + '/lib/data/data.json', 'utf8')),
+    courses: courses,
+  }
+
+  await fs.writeFile(process.cwd() + '/lib/data/data.json', JSON.stringify(updatedData, null, 2), 'utf8')
+
+  return courses[courseIndex]
+}
