@@ -10,6 +10,8 @@ Easily integrate [Paradym](https://paradym.id) workflows into your frontend appl
 
 ## Before you begin
 
+> Check out the [YouTube video](https://youtu.be/fU-GHo-g5bs?si=bA3pSMTENtMqBo-E) for a complete walkthrough of the demo application and its workflows.
+
 This demo uses [Paradym](https://paradym.id), a workflow builder for developers that provides the actions, workflows and infrastructure you need to use verifiable credentials in your solution.
 
 If you don't have an account yet, you can start with our [quick start guide](https://docs.paradym.id/).
