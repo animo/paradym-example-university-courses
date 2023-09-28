@@ -35,7 +35,7 @@ actions:
           - names:
               - courseId
             restrictions:
-              - credentialDefinitionId: did:cheqd:testnet:0d0a615e-5295-4137-8fda-0d95aca5d32b/resources/2ce68d1b-b79c-4d5e-ba7f-d321688bde8f
+              - credentialDefinitionId: <YOUR_CREDENTIAL_DEFINITION_ID>
 
   # Verify that course identifier equals required course identifier
   - id: verifyCourse
