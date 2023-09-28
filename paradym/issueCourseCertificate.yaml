@@ -1,6 +1,5 @@
-name: Issue Course Certificate
+name: Issue course certificate
 
-# Workflow can be triggered through the API
 trigger:
   type: api
 
@@ -18,7 +17,7 @@ input:
       description: The id of the course
     courseName:
       type: string
-      description: The id of the course
+      description: The name of the course
   required:
     - studentNumber
     - studentName
@@ -26,13 +25,13 @@ input:
     - courseName
 
 actions:
-  # Setup the connection by showing the QR code in your client
+  # Setup the connection by showing the invitationUrl as a QR code in your client
   - id: createConnection
     name: didcomm/createConnection@v1
     attributes:
       label: Silicon University
 
-  # Issue the course credential
+  # Issue the course credential with the connection
   - id: issueCredential
     name: didcomm/issueCredential@v1
     attributes:

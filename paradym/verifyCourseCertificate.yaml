@@ -17,7 +17,7 @@ input:
     - requiredCourseId
 
 actions:
-  # Setup the connection by showing the QR code in your client
+  # Setup the connection by showing the invitationUrl as a QR code in your client
   - id: createConnection
     name: didcomm/createConnection@v1
     attributes:
