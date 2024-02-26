@@ -47,11 +47,15 @@ Next, you need to create the other 2 workflows: Issue Course Certificate and Ver
 
 Once you have created the workflows in the Paradym dashboard, you can copy the workflow ID's from Paradym and set them as environment variables.
 
-#### Step 3: Create your Paradym API Key
+#### Step 3: Set your Paradym Project ID
+
+You can find your Paradym Project ID in the settings tab on the Paradym dashboard as described [here](https://docs.paradym.id/executing-a-workflow/api-execution#project-id).
+
+#### Step 4: Create your Paradym API Key
 
 You can generate your API key in the settings tab on the Paradym dashboard as described in [here](https://docs.paradym.id/executing-a-workflow/api-execution#api-key).
 
-#### Step 4: Setup Paradym Webhook
+#### Step 5: Setup Paradym Webhook
 
 The application uses Paradym Webhooks. For this, we need to create a Webhook in the Paradym dashboard (as described [here](https://docs.paradym.id/using-webhooks)).
 
@@ -65,9 +69,9 @@ Use the **https** url to create your webhook in the Paradym dashboard. Make sure
 
 You'll need set the webhook secret in your environment variables.
 
-#### Step 5: Set the environment variables
+#### Step 6: Set the environment variables
 
-The environment variables consist of your Paradym API Key, your Paradym webhook secret, your Paradym project ID, and the ID's of the workflows just created. Once you have created the workflows in the Paradym dashboard, you can copy the workflow ID's from Paradym and set them as environment variables.
+The environment variables consist of your Paradym API Key, your Paradym project ID, your Paradym webhook secret, and the ID's of the workflows just created. Once you have created the workflows in the Paradym dashboard, you can copy the workflow ID's from Paradym and set them as environment variables.
 
 ```bash
 cp .env.example .env.local
