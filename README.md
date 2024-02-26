@@ -53,7 +53,7 @@ You can generate your API key in the settings tab on the Paradym dashboard as de
 
 #### Step 4: Setup Paradym Webhook
 
-The application uses Paradym Webhooks. For this, we need to create a Webhook in the Paradym dashboard (as described [here](https://docs.paradym.id/working-with-executions/using-webhooks)).
+The application uses Paradym Webhooks. For this, we need to create a Webhook in the Paradym dashboard (as described [here](https://docs.paradym.id/using-webhooks)).
 
 For this to work with your local environment, we'll need to expose port 3000 to the internet. This can be done using [ngrok](https://ngrok.com/). Once you have installed ngrok, you can run the following command to expose port 3000 to the internet.
 
@@ -67,18 +67,19 @@ You'll need set the webhook secret in your environment variables.
 
 #### Step 5: Set the environment variables
 
-The environment variables consist of your Paradym API Key, and the ID's of the workflows just created. Once you have created the workflows in the Paradym dashboard, you can copy the workflow ID's from Paradym and set them as environment variables.
+The environment variables consist of your Paradym API Key, your Paradym webhook secret, your Paradym project ID, and the ID's of the workflows just created. Once you have created the workflows in the Paradym dashboard, you can copy the workflow ID's from Paradym and set them as environment variables.
 
 ```bash
 cp .env.example .env.local
 ```
 
-| Variable                                | Description                                                                                                                                                                                                                                                              |
-| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `PARADYM_API_KEY`                       | This is the API key used to send request to Paradym. You can generate your API key in the settings tab on the Paradym dashboard as described in [here](https://docs.paradym.id/executing-a-workflow/api-execution#api-key).                                              |
-| `PARADYM_WEBHOOK_SECRET`                | This is a secret that is generated once you create a Webhook in the Paradym dashboard. You can set up a Webhook in the settings tab on the Paradym dashboard as described in [here](https://docs.paradym.id/working-with-executions/using-webhooks#setting-up-webhooks). |
-| `ISSUE_COURSE_CERTIFICATE_WORKFLOW_ID`  | This is the ID of the issue course credential workflow. Once you have created the workflow in Paradym you can copy the ID from the [executions tab](https://docs.paradym.id/executing-a-workflow/api-execution#workflow-id).                                             |
-| `VERIFY_COURSE_CERTIFICATE_WORKFLOW_ID` | This is the ID of the verify course credential workflow. Once you have created the workflow in Paradym you can copy the ID from the [executions tab](https://docs.paradym.id/executing-a-workflow/api-execution#workflow-id).                                            |
+| Variable                                | Description                                                                                                                                                                                                                   |
+| --------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `PARADYM_API_KEY`                       | This is the API key used to send request to Paradym. You can generate your API key in the settings tab on the Paradym dashboard as described in [here](https://docs.paradym.id/executing-a-workflow/api-execution#api-key).   |
+| `PARADYM_WEBHOOK_SECRET`                | This is a secret that is generated once you create a Webhook in the Paradym dashboard. You can set up a Webhook in the settings tab on the Paradym dashboard as described in [here](https://docs.paradym.id/using-webhooks).  |
+| `PARADYM_PROJECT_ID`                    | This is your Paradym project identifier. It can be located in the settings tab on the Paradym dashboard as described [here](https://docs.paradym.id/executing-a-workflow/api-execution#project-id).                           |
+| `ISSUE_COURSE_CERTIFICATE_WORKFLOW_ID`  | This is the ID of the issue course credential workflow. Once you have created the workflow in Paradym you can copy the ID from the [executions tab](https://docs.paradym.id/executing-a-workflow/api-execution#workflow-id).  |
+| `VERIFY_COURSE_CERTIFICATE_WORKFLOW_ID` | This is the ID of the verify course credential workflow. Once you have created the workflow in Paradym you can copy the ID from the [executions tab](https://docs.paradym.id/executing-a-workflow/api-execution#workflow-id). |
 
 ## Running the demo
 
