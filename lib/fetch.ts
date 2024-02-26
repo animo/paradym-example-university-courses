@@ -1,6 +1,6 @@
-import { PARADYM_API_KEY } from '@/constants'
+import { PARADYM_API_KEY, PARADYM_PROJECT_ID } from '@/constants'
 
-const PARADYM_URL = 'https://api.paradym.id/v1'
+const PARADYM_URL = `https://api.paradym.id/v1/projects/${PARADYM_PROJECT_ID}`
 
 export const paradymFetch = async (path: string, init?: RequestInit | undefined) => {
   return await fetch(PARADYM_URL + path, {
