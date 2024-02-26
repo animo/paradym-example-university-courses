@@ -49,7 +49,7 @@ Once you have created the workflows in the Paradym dashboard, you can copy the w
 
 #### Step 3: Set your Paradym Project ID
 
-You can find your Paradym Project ID in the settings tab on the Paradym dashboard as described [here](https://docs.paradym.id/executing-a-workflow/api-execution#project-id). Copy the project ID and set it as the value for the `PARADYM_PROJECT_ID` environment variable in `.env.example`.
+You can find your Paradym Project ID in the settings tab on the Paradym dashboard as described [here](https://docs.paradym.id/executing-a-workflow/api-execution#project-id).
 
 #### Step 4: Create your Paradym API Key
 
